@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Ma To Do List
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-input placeholder="Nouvelle tâche" [(ngModel)]="newtask" (keyup.enter)="nouvelletache()"></ion-input>
+  <ion-button (click)="nouvelletache()">Ajouter des tâches</ion-button>
+  <ion-input (input)="onInput($event.target.value)"> </ion-input>
+  
+  <h3>A faire :</h3>
+  <ion-list>
+    <ion-item *ngFor="let task of tableau1">
+      <input type="checkbox" (click)="cocher(task)">
+      <ion-label>
+        {{task}}  
+      </ion-label>
+      <ion-button (click)="supprimertache(task)"><ion-icon name="trash"></ion-icon></ion-button>
+    </ion-item>
+  </ion-list>
+
+  <p *ngIf="tableau1.length + tableau2.length == 0 ">Vous n'avez aucune tâche à faire, feignant !</p>
+  <p *ngIf="tableau1.length == 0 && tableau2.length != 0 ">Vous avez accompli toutes vos tâches, bravo !</p>
+  <p *ngIf="tableau1.length == 1">Il ne vous reste plus qu'une tâche à accomplir, courage !</p>
+  <p *ngIf="tableau1.length >= 2">Il vous reste {{tableau1.length}} tâches à accomplir.</p>
+
+  <h3>Fait :</h3>
+  <ion-list>
+    <ion-item *ngFor="let task of tableau2">
+      <input type="checkbox" (click)="decocher(task)"  checked>
+      <ion-label>
+        <strike>{{task}}</strike>
+      </ion-label>
+      <ion-button (click)="supprimertache(task)"><ion-icon name="trash"></ion-icon></ion-button>
+    </ion-item>
+
+  </ion-list>
+
+  <p>Vous avez accompli {{tableau2.length}} tâche(s) et il vous reste {{tableau1.length}} tâche(s) à accomplir.</p>
+
+</ion-content>
